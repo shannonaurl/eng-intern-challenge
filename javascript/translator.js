@@ -57,29 +57,58 @@ for (const [key, value] of Object.entries(BRAILLE_TO_ENGLISH)) {
     ENGLISH_TO_BRAILLE[value] = key;
 }
 
+// BRAILLE TO ENGLISH: 
+// if uppercase symbol, all 6 characters afterwards is capitalized 
+// if not uppercase or not number symbol, normal 
+// if number symbol, all the sets of 6 characters afterwards should be numbers until space is found 
+
+// for all the 6-char symbols, for each 6-character, check if: 
+// 1. if it is an uppercase symbol, at least do normally once, but then must check again if it is an upper case symbol 
+// 2. if it is a number symbol, while there is no space symbol, then normally convery 
+
 function brailleToEnglish(brailleString) {
     let result = '';
+    let upperCase = false; 
+    let numberIndicator = false; 
+
+    // Abc12 = 5 '.....0''00....'
+
+
     for (let i = 0; i < brailleString.length; i += 6) {
-        let brailleChar = brailleString.substring(i, i + 6);
-        if (brailleChar == '.....0') {
-            result = result + BRAILLE_TO_ENGLISH[brailleChar].toUpperCase(); 
-        } else if (brailleChar == '.0.000') {
-            if (Array.isArray(BRAILLE_TO_ENGLISH(brailleChar))) {
-                result = result + 
+        
+        if (brailleString.substring(i, i + 6) == '.....0') {
+            i = i + 6; 
+            result = result + BRAILLE_TO_ENGLISH[brailleString.substring(i, i + 6)].toUpperCase(); 
+        } else if (brailleString.substring(i, i + 6) == '.0.000') {
+            i = i + 6; 
+            while ((brailleString.substring(i, i + 6) != '......') && i < brailleString.length) {
+                result = result + BRAILLE_TO_ENGLISH[railleString.substring(i, i + 6)][1]; 
             }
-        } else {
-            result = result + BRAILLE_TO_ENGLISH[brailleChar]; 
+            break; 
         }
     }
+
     return result;
 }
 
 function englishToBraille(englishString) {
-    let result = '';
-    for (let char of englishString.toLowerCase()) {
-        result += ENGLISH_TO_BRAILLE[char] || '?';
+
+    let result = ''; 
+    for (let i = 0; i < englishString.length; i++) {
+        if (englishString.substring(i, i + 1) == 'capital follows') {
+            i = i + 1; 
+            result = result + ENGLISH_TO_BRAILLE[i]; 
+        } else if (englishString.substring(i, i + 1) == 'number follows') {
+            i = i + 1; 
+            while ((englishString.substring(i, i + 1) != )
+        }
     }
-    return result;
+
+    // let result = '';
+    // for (let char of englishString.toLowerCase()) {
+    //     result += ENGLISH_TO_BRAILLE[char] || '?';
+    // }
+    // return result;
 }
 
 function translate(inputString) {
