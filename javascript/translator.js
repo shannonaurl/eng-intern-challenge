@@ -100,7 +100,7 @@ function englishToBraille(englishString) {
             result = result + ENGLISH_TO_BRAILLE[i]; 
         } else if (englishString.substring(i, i + 1) == 'number follows') {
             i = i + 1; 
-            while ((englishString.substring(i, i + 1) != )
+            while ((englishString.substring(i, i + 1) != ))
         }
     }
 
